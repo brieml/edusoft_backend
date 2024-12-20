@@ -3,6 +3,12 @@
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\auth\ResetPasswordController;
+use App\Http\Controllers\dashboard\city\CityController;
+use App\Http\Controllers\dashboard\department\DepartmentController;
+use App\Http\Controllers\dashboard\documenttype\DocumentTypeController;
+use App\Http\Controllers\dashboard\institutions\InstitutionController;
+use App\Http\Controllers\dashboard\specialties\SpecialtyController;
+use App\Http\Controllers\upload\UploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,5 +49,25 @@ Route::post('/password/reset-password', [ResetPasswordController::class, 'resetP
 Route::middleware('auth:sanctum')->group(function () {
     // Ruta para cerrar sesión (revoca el token de autenticación)
     Route::post('authenticate/logout', [LoginController::class, 'logout']);
+
+
+    Route::apiResource('institutions', InstitutionController::class);
+
+
+    // Ruta para la gestión de especialidades
+    Route::apiResource('/dashboard/specialties', SpecialtyController::class);
+
+    // Ruta para la gestión de departamentos
+    Route::apiResource('/dashboard/departments', DepartmentController::class);
+
+    // Ruta para la gestión de ciudades
+    Route::apiResource('/dashboard/cities', CityController::class);
+
+    // Ruta para la gestión de tipos de documentos
+    Route::apiResource('/dashboard/document-types', DocumentTypeController::class);
+
+
+    Route::post('/upload', [UploadController::class, 'upload'])->name('files.upload');
+
 });
 
